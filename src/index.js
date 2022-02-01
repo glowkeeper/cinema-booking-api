@@ -1,5 +1,7 @@
 // Load our .env file
 require('dotenv').config();
+const customerRouter = require('./routers/customer');
+const movieRouter = require('./routers/movie');
 
 // Import express and cors
 const express = require('express');
@@ -14,17 +16,9 @@ app.use(express.json());
 // Tell express to use a URL Encoding middleware
 app.use(express.urlencoded({ extended: true }));
 
-
-
-
-
 // Tell express to use your routers here
-const customerRouter = require('./routers/customer');
 app.use('/customer', customerRouter);
-
-
-
-
+app.use('/movies', movieRouter);
 
 
 // Set up a default "catch all" route to use when someone visits a route
