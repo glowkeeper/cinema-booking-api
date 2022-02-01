@@ -1,11 +1,12 @@
 // Load our .env file
 require('dotenv').config();
-const customerRouter = require('./routers/customer');
-const movieRouter = require('./routers/movie');
 
 // Import express and cors
 const express = require('express');
 const cors = require('cors');
+
+const customerRouter = require('./routers/customer');
+const movieRouter = require('./routers/movie');
 
 // Set up express
 const app = express();
