@@ -53,7 +53,7 @@ const getRuntimes = async (req, res) => {
 
     let movies = {}
     if (req.query.lessthan !== undefined) {
-        console.log("Getting All Movies <")
+        console.log("less than")
         const LT = 
         movies = await prisma.movie.findMany({
             include: {
@@ -66,7 +66,7 @@ const getRuntimes = async (req, res) => {
             },
         })
     } else if (req.query.greaterthan !== undefined) {
-        console.log("Getting All Movies >")
+        console.log("greater than")
         movies = await prisma.movie.findMany({
             include: {
                 screenings: true
