@@ -33,9 +33,51 @@ const getMovies = async (req, res) => {
 
     const getMovies = await prisma.movie.findMany({})
     console.log('movie', getMovies)
+    
     res.json({ data: getMovies });
+    
+}
+
+const getAllScreenings = async (req, res) => {
+
+    const movies = await prisma.movie.findMany({
+        include: {
+            screenings: true
+        },          
+    });
+
+    res.json({ data: movies });    
+}
+
+const getMovieScreenings = async (req, res) => {
+
+    const { movieId } = req.params;
+
+    console.log('got movie', movieId)
+
+    const movies = await prisma.movie.findFirst({
+        where: {
+            id: parseInt(movieId),
+        },
+        select: {
+            id: true,
+            title: true,
+            runtimeMins: true,
+            screenings: {
+                where: {
+                    startsAt: {
+                        gte: new Date()
+                    }
+                }
+            }
+        }            
+    });
+
+    res.json({ data: movies });    
 }
 
 module.exports = {
-    getMovies
+    getMovies,
+    getAllScreenings,
+    getMovieScreenings
 };
