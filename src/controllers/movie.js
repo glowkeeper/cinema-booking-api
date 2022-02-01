@@ -59,18 +59,9 @@ const getMovieScreenings = async (req, res) => {
         where: {
             id: parseInt(movieId),
         },
-        select: {
-            id: true,
-            title: true,
-            runtimeMins: true,
-            screenings: {
-                where: {
-                    startsAt: {
-                        gte: new Date()
-                    }
-                }
-            }
-        }            
+        include: {
+            screenings: true
+        }         
     });
 
     res.json({ data: movies });    
