@@ -7,6 +7,7 @@ const cors = require('cors');
 
 const customerRouter = require('./routers/customer');
 const movieRouter = require('./routers/movie');
+const screeningsRouter = require('./routers/screenings');
 
 // Set up express
 const app = express();
@@ -20,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 // Tell express to use your routers here
 app.use('/customer', customerRouter);
 app.use('/movies', movieRouter);
-
+app.use('/screenings', screeningsRouter);
 
 // Set up a default "catch all" route to use when someone visits a route
 // that we haven't built
