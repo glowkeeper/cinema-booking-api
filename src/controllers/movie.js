@@ -92,10 +92,44 @@ const createMovie = async (req, res) => {
     res.json({ data: movie });
 }
 
+const createMovieScreening = async (req, res) => {
+    const {
+        title,
+        runtimeMins,
+        startsAt,
+        screenId
+    } = req.body
+
+    console.log("in create screening", title, runtimeMins, startsAt, screenId)
+
+    const createdMovie = await prisma.movie.create({
+        data: {
+            title,
+            runtimeMins,
+            screenings: {
+                create: {
+                    startsAt,
+                    screen: {
+                        connect: {
+                            id: screenId
+                        }
+                    }
+                }
+            }
+        },
+        include: {
+            screenings: true
+        }
+    })
+
+    res.json({ data: createdMovie })
+}
+
 module.exports = {
     getMovies,
     getAllScreenings,
     getRuntimes,
     getMovieScreenings,
-    createMovie
+    createMovie,
+    createMovieScreening
 };

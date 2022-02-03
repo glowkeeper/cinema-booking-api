@@ -4,7 +4,8 @@ const {
     getAllScreenings,
     getRuntimes,
     getMovieScreenings,
-    createMovie
+    createMovie,
+    createMovieScreening
 } = require('../controllers/movie');
 
 const router = express.Router();
@@ -17,5 +18,6 @@ router.get("/runtimes?greaterthan=:runtime", getRuntimes)
 router.get("/screenings/:movieId", getMovieScreenings);
 
 router.post("/create", createMovie);
+router.post("/create-screening", createMovieScreening);
 
 module.exports = router;
