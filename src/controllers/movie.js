@@ -100,28 +100,37 @@ const createMovieScreening = async (req, res) => {
         screenId
     } = req.body
 
-    console.log("in create screening", title, runtimeMins, startsAt, screenId)
+    //console.log("in create screening", title, runtimeMins, startsAt, screenId)
 
-    const createdMovie = await prisma.movie.create({
-        data: {
+    const createObject = {
+        data: { 
             title,
-            runtimeMins,
-            screenings: {
-                create: {
-                    startsAt,
-                    screen: {
-                        connect: {
-                            id: screenId
+            runtimeMins
+        }
+    }
+
+    if ( startsAt && screenId ) {
+        createObject = { 
+            data: {
+                ...createObject.data,
+                screenings: {
+                    create: {
+                        startsAt,
+                        screen: {
+                            connect: {
+                                id: screenId
+                            }
                         }
                     }
                 }
+            },
+            include: {
+                screenings: true
             }
-        },
-        include: {
-            screenings: true
         }
-    })
+    }
 
+    const createdMovie = await prisma.movie.create(createObject)
     res.json({ data: createdMovie })
 }
 
